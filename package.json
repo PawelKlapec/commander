@@ -1,0 +1,26 @@
+{
+  "name": "commander",
+  "version": "1.0.0",
+  "description": "Runs Commands",
+  "main": "./bin/index.js",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "bin": {
+    "commander": "./bin/index.js"
+  },
+  "keywords": [
+    "commander",
+    "commands",
+    "run"
+  ],
+  "author": "me",
+  "license": "ISC",
+  "dependencies": {
+    "boxen": "^7.0.1",
+    "chalk": "^5.2.0",
+    "console-table-printer": "^2.11.1",
+    "yargs": "^17.7.0"
+  }
+}

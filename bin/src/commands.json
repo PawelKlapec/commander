@@ -1,0 +1,18 @@
+[
+  {
+    "description": "docker clean everything",
+    "command": "docker system prune --all --force --volumes"
+  },
+  {
+    "description": "docker stop all containers",
+    "command": "docker stop $(docker ps -aq)"
+  },
+  {
+    "description": "docker remove all containers",
+    "command": "docker rm $(docker ps -aq)"
+  },
+  {
+    "description": "test",
+    "command": "echo test"
+  }
+]
