@@ -14,5 +14,9 @@
   {
     "description": "test",
     "command": "echo test"
+  },
+  {
+    "description": "test error",
+    "command": "exit 125"
   }
 ]

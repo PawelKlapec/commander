@@ -6,11 +6,6 @@ import boxen from "boxen";
 
 const execPromise = util.promisify(exec);
 
-const userInput = readline.createInterface({
-  input: process.stdin,
-  output: process.stdout,
-});
-
 const validate = (args, data) => {
   for (let index = 0; index < args.length; index++) {
     const number = args[index];
@@ -21,7 +16,7 @@ const validate = (args, data) => {
       return false;
     }
 
-    console.log(command['command']);
+    console.log(command["command"]);
   }
 
   console.log();
@@ -31,7 +26,7 @@ const validate = (args, data) => {
 
 const executeCommand = async (command) => {
   try {
-    const {stdout, stderr} = await execPromise(command);
+    const { stdout, stderr } = await execPromise(command);
     console.log(boxen(`${command}`));
     console.log(`${stdout}`);
 
@@ -40,26 +35,27 @@ const executeCommand = async (command) => {
       return false;
     }
   } catch (error) {
-      console.log(chalk.red.bold(`Error: ${error}`));
-      return false;
-    }
+    console.log(chalk.red.bold(`${error}`));
+    return false;
+  }
 
   return true;
 };
 
 const question = () => {
-  let result = true;
+  const query = "Would you like to continue despite error? (y/n): ";
 
-  userInput.question(
-    "Would you like to continue despite error? (Y/N)",
-    (name) => {
-      const value = String(name).toLowerCase();
-      result = value == "y" || name == "yes";
-      userInput.close();
-    }
+  const rl = readline.createInterface({
+    input: process.stdin,
+    output: process.stdout,
+  });
+
+  return new Promise((resolve) =>
+    rl.question(query, (ans) => {
+      rl.close();
+      resolve(ans);
+    })
   );
-
-  return result;
 };
 
 export default async (args, data) => {
@@ -74,12 +70,16 @@ export default async (args, data) => {
     try {
       const result = await executeCommand(command["command"]);
       if (!result) {
-        if (!question()) {
+        const questionResult = await question();
+        const value = String(questionResult).toLowerCase();
+        const answer = value == "y" || value == "yes";
+        if (!answer) {
+          console.log("\nGoodbye.");
           return;
         }
       }
     } catch (error) {
-      const message = `Error: ${error}`;
+      const message = error;
       console.log(chalk.red.bold(message));
     }
   }
