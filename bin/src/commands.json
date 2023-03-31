@@ -1,5 +1,13 @@
 [
   {
+    "description": "aws login SSO",
+    "command": "aws sso login"
+  },
+  {
+    "description": "aws login ECR [private]",
+    "command": "aws_ecr"
+  },
+  {
     "description": "docker clean everything",
     "command": "docker system prune --all --force --volumes"
   },
@@ -10,6 +18,14 @@
   {
     "description": "docker remove all containers",
     "command": "docker rm $(docker ps -aq)"
+  },
+  {
+    "description": "git fix corrupted files",
+    "command": "find .git/objects/ -type f -empty | xargs rm"
+  },
+  {
+    "description": "git fix invalid objects",
+    "command": "git for-each-ref --format=\"%(refname)\" | while read ref; do git show-ref --quiet --verify $ref 2>/dev/null || git update-ref -d $ref done"
   },
   {
     "description": "test",

@@ -13,8 +13,18 @@ const table = new Table({
   ],
 });
 
+
+function truncateString(str, num) {
+  if (str.length <= num) {
+    return str;
+  }
+
+  return str.slice(0, num) + "...";
+}
+
 for (let index = 0; index < data.length; index++) {
-  table.addRow({ index: index, ...data[index] });
+  const command = truncateString(data[index]["command"], 50);
+  table.addRow({ index: index, ...data[index], command: command });
 }
 
 export { data, table };
